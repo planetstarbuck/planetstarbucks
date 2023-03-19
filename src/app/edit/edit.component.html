@@ -1,0 +1,130 @@
+<!-- <form style="background-color: white !important;" *ngIf="startup; else elseTemplate" [formGroup]="newList" (ngSubmit)="onSubmit()"  class="px-3"> -->
+<form *ngIf="startup; else elseTemplate" [formGroup]="newList" (ngSubmit)="onSubmit()"  class="px-3">
+
+  <!-- LIST -->
+  <div><br></div>
+  <span class="d-flex align-items-baseline p-0">
+    <span class="badge bg-dark m-1 ">LIST</span>
+    <div class="col d-flex p-2">
+      <input *ngIf="listcount>1" class="form-control form-control-lg" placeholder="title" type="text" formControlName="listTitle" readonly> 
+      <input *ngIf="listcount==1" class="form-control form-control-lg" placeholder="title" type="text" formControlName="listTitle" >
+    </div>
+  </span>
+
+  <div *ngIf="newList.controls['listTitle'].errors && submitted">
+    <div class="alert alert-primary mb-5" role="alert" *ngIf="newList.controls['listTitle'].errors.required">Title is required</div>
+    <div class="alert alert-primary mb-5" role="alert" *ngIf="newList.controls['listTitle'].errors?.['minlength']">
+      Title must be at least 6 characters
+    </div>
+    <div class="alert alert-primary mb-5" role="alert" *ngIf="newList.controls['listTitle'].errors.maxlength">
+      Title must be max. 60 characters ({{newList.controls['listTitle'].value.length}})
+    </div>
+  </div>
+  
+  <!-- SUBLIST -->
+  <div formArrayName="sublist">
+    <div *ngFor="let user of sublistArray.controls; let i=index" [formGroupName]="i">
+
+      <!-- ITEM -->
+      <div formArrayName="item">
+        <div *ngFor="let item of getItemArray(i).controls; let t=index" [formGroupName]="t">
+          <span class="d-flex align-items-baseline pt-2">
+            <span class="p-2  bd-highlight">
+              <span class="badge bg-dark p-1 m-1">P{{t+1}}</span>
+            </span>
+            <input  [typeahead]="options"  
+            [typeaheadMinLength]="0"
+            (typeaheadOnSelect)="onSelectItem($event)"
+            [typeaheadIsFirstItemActive]="false"
+            [isAnimated]="true" class="flex-grow-1 bd-highlight w-25"  placeholder="{{t+1 | ordinal }} item" type="text"
+              formControlName="itemTitle">
+            <span class="p-2  bd-highlight">
+              <button type='button' class="btn btn-outline-secondary btn-sm" *ngIf=" t != 0" (click)="moveUp(t)"> <i
+                  class="bi-caret-up-fill" width="32" height="32"></i></button>
+              <button type='button' class="btn btn-outline-secondary btn-sm" *ngIf=" t != getItemArray(i).controls.length - 1"
+                  (click)="moveDown(t)"> <i class="bi-caret-down-fill" width="32" height="32"></i></button>
+              <button type='button' class="btn btn-outline-secondary btn-sm" *ngIf=" t == getItemArray(i).controls.length - 1 &&  t > 2 " 
+                (click)="getOnTop()"> <span class="badge bg-secondary p-1">P1</span></button>
+            </span>
+            <span class="p-2 bd-highlight self-align-center"><button type='button'
+                class="btn btn-outline-secondary btn-sm text-black" (click)="deleteItem(i, t)"><i class="bi-trash-fill" width="32"
+                  height="32"></i></button></span>
+          </span>
+          <div *ngIf="item.controls['itemTitle'].errors && submitted">
+            <div class="alert alert-primary mb-4" role="alert" *ngIf="item.controls['itemTitle'].errors.required">
+Item title needs to be filled (or removed)
+            </div>
+            <div class="alert alert-primary mb-4" role="alert" *ngIf="item.controls['itemTitle'].errors.maxlength">
+              Item-title must be max. 100 characters ({{item.controls['itemTitle'].value.length}})
+            </div>
+          </div>
+          <div [ngbCollapse]="isCollapsed">
+            <textarea class=" col d-flex p-2  form-control form-control-sm" placeholder="description" type="text"
+            formControlName="itemContext" rows="3"></textarea><br>
+          </div>
+        </div>
+      </div>
+      <!-- ITEM END -->
+      <div class="d-flex  justify-content-center flex-row  bd-highlight pt-2 mb-2">
+        <div class="d-flex"><span  class="btn btn-outline-secondary btn-sm" (click)="addItem(i)" style="color: black">add
+            item</span></div>
+        <div class="d-flex ps-3"> <span class="btn btn-outline-secondary btn-sm"  data-bs-toggle="collapse"
+            role="button" aria-expanded="false" (click)="showComments()" style="color: black">
+            show / hide  <i class="bi bi-justify-left" width="32" height="32"></i> </span></div>
+        <div *ngIf="newList.value.sublist[0].subListHidden" class="d-flex ps-3"> <span class="btn btn-outline-secondary btn-sm" 
+          role="button"  (click)="setPublic()" style="color: black">
+          <i class="bi bi-lock-fill" width="32" height="32"></i>  private</span></div>
+        <div *ngIf="!newList.value.sublist[0].subListHidden" class="d-flex ps-3"> <span class="btn btn-outline-secondary btn-sm"  
+            role="button" (click)="setPrivate()" style="color: black">
+            <i class="bi bi-unlock-fill" width="32" height="32"></i> public</span></div>
+      </div>
+    </div>
+  </div>
+
+
+  <span *ngIf="newList">
+    <span *ngIf="list.chapters.length" class="d-flex flex-wrap align-items-baseline bd-highlight">
+    <span class="pe-2 pt-4"><span class="badge bg-dark">CHAPTERS</span></span>
+    <span *ngFor="let chapter of list.chapters; let i=index">
+      <span class="badge rounded-pill bg-ligh text-black">
+        {{chapter}}
+      </span>
+    </span>
+    <span class="p-3 me-auto"><input class="form-control-sm" placeholder="extra chapter" type="text"
+      formControlName="chapters">
+    </span>
+  </span>
+    <span *ngIf="list.chapters.length == 0" class="d-flex jflex-wrap align-items-baseline bd-highlight">
+      <span class="badge bg-dark">CHAPTER</span>
+      <span class="p-3 me-auto"><input class="form-control-sm" placeholder="chapter" type="text"
+        formControlName="chapters">
+      </span>
+  </span>
+</span>
+
+
+<div *ngIf="newList.controls['chapters'].errors && submitted">
+  <div class="alert alert-primary" role="alert" *ngIf="newList.controls['chapters'].errors.maxlength">
+    Chapter must be max. 25 characters ({{newList.controls['chapters'].value.length}})
+  </div>
+</div>
+ 
+
+  <span class="d-flex justify-content-center flex-wrap align-items-baseline pt-2"> 
+    <button  class="btn btn-outline-dark btn-sm" [routerLink]="['/lists', list_id]" skipLocationChange>BACK</button>
+    <button type="submit" class="btn btn-dark btn-primary ms-3" [disabled]="is_busy">SAVE</button> 
+    <span *ngIf="is_busy" class="ms-3 spinner-border spinner-border-sm" role="status"></span> 
+  </span>
+
+
+
+  <br><br>
+ <!-- <pre>{{ newList.value | json }}</pre>  -->
+</form>
+
+
+
+<ng-template #elseTemplate>
+  <br>
+  <app-loading></app-loading>
+</ng-template>

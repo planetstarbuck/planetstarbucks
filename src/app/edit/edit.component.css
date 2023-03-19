@@ -1,0 +1,5 @@
+#itemContext {
+    background: #ddd;
+    white-space: pre-wrap;  /* <-- THIS PRESERVES THE LINE BREAKS */
+  }
+

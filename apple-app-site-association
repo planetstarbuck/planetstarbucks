@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "PUP64GSJHR.com.listdropper.app",
+        "paths": ["*"]
+      }
+    ]
+  }
+}

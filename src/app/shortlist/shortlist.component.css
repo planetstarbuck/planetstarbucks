@@ -1,0 +1,25 @@
+p {
+  white-space: pre-line;
+  margin: 0;
+  padding: 0;
+  /* or pre-wrap or pre-line */
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/white-space */
+}
+
+
+.h6{
+    font-size: 30px;
+}
+
+/* .card-header {
+    background-color: #e8ffea;
+  } */
+
+.collapse-animation-disabled {
+    transition: none;
+  }
+
+  .my-n1 {
+    margin-top: -0.25rem !important;
+    margin-bottom: -0.75rem !important;
+  }

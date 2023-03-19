@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { registerPlugin } from \"@capacitor/core\";\nconst SavePassword = registerPlugin(\"SavePassword\");\nexport * from \"./definitions\";\nexport { SavePassword }; //# sourceMappingURL=index.js.map","map":null,"metadata":{},"sourceType":"module"}

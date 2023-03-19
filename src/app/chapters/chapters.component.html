@@ -1,0 +1,29 @@
+  <app-my-stuff></app-my-stuff>
+  <br>
+<div *ngIf="loading">
+    <br>
+    <app-loading></app-loading>
+  </div>
+  <div *ngIf="chapters.length == 0">
+    <br>
+    <p class="text-center">
+    Followed chapters show up here
+    <br><br>
+    Lists from followed chapters are on top of your feed 
+
+  </p>
+  </div>
+  <div *ngIf="chapters.length">
+    <div class="card border-0 mx-auto" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+      <div *ngFor="let chapter of chapters; let i=index " class="d-grid gap-3 d-flex justify-content-between align-items-center">
+        <b><a class="nav-item nav-link p-3" href="#" [routerLink]="['/chapter',chapter]" class="btn-sm btn-block">
+           {{chapter}}</a></b>
+   <span class="m-2 btn btn-outline-dark btn-block btn-sm py-0"
+        (click)="unfollowChapter(chapter)"> UNFOLLOW </span>
+          </div>
+    </div>
+  </div>
+  <br>
+  <div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+    <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+  </span></div>

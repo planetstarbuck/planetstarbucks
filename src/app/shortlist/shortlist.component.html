@@ -1,0 +1,171 @@
+<div *ngIf="shortlistloading" class="d-flex justify-content-center pt-4">
+    <span class="m-2 spinner-border spinner-border-sm"></span>
+</div>
+
+<div *ngIf="list">
+    <div *ngIf="list.sublistCreators.length > 1">
+        <div class="card mx-auto border-0 pt-3" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+
+            <app-chapter-heading class="pt-3" [list]="list" [showDropLink]="showDropLink"
+                [followed_chapters]="followed_chapters" (unfollowChapterEvent)="unfollowChapter($event)"
+                (followChapterEvent)="followChapter($event)">
+            </app-chapter-heading>
+            <p class="pt-4"></p>
+            <div class="card  border-0">
+                <!-- <div class="card shadow-sm border-0"> -->
+                <div class="card-header d-flex justify-content-end align-items-center">
+
+                    <a href="#" class="card-link text" [routerLink]="['/longlist', listid]"><i><b>MASTERLIST</b></i></a>
+                    <span class="ps-2"></span> <a href="#" class="card-link text"
+                        [routerLink]="['/longlist', listid]"><b><i>{{list.sublistCreators.length}}</i></b><i
+                            class="ps-1 bi bi-person-lines-fill"></i></a>
+                    <span *ngIf=" isLoggedIn && saved_lists.includes(listid)" class="p-2 ms-auto"> <button
+                            class="btn btn-outline-dark btn-sm" style="position: relative;"
+                            (click)="removeFromSaved(listid)"><i class="bi-check-lg text-black" width="32"
+                                height="32"></i></button></span>
+                    <span *ngIf="isLoggedIn && !saved_lists.includes(listid)" class="p-2 ms-auto"> <button
+                            class="btn btn-outline-dark btn-sm" style="position: relative;"
+                            (click)="addToSaved(listid)">SAVE</button></span>
+                    <span *ngIf="!isLoggedIn" class="p-2 ms-auto"> <button class="btn btn-outline-dark btn-sm"
+                            style="position: relative;" [routerLink]="['/login']">SAVE</button></span>
+                    <!-- show only in case of mobile page:     <span class="d-md-none"> -->
+                    <span class="p-1"> <a (click)="openModal(template)"><i class="bi-box-arrow-up"
+                                style="color: black;"></i></a></span>
+                                <!-- font-size: 19px; -->
+
+                    <!-- Modal -->
+                    <ng-template #template>
+                        <div class="modal-header">
+                            <h5 class="modal-title pull-left"><i>{{list.listTitle}}</i></h5>
+                            <button class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+                                <span aria-hidden="true" class="visually-hidden">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body d-flex justify-content-center">
+                            <div row>
+                                <div class="col text-center">
+                                    <a href="http://twitter.com/share?text={{list.listTitle}}%0a1.%20{{list.shortlistItem[0]?.itemTitle}}%0a2.%20{{list.shortlistItem[1]?.itemTitle}}%0a3.%20{{list.shortlistItem[2]?.itemTitle}}%0a%0aCheck the complete list%3a&url=www.listdropper.com/lists/{{listid}}"
+                                        target="blank" class="m-2 btn btn-outline-dark btn-lg"><i
+                                            class="bi-twitter text-black"></i> Twitter</a>
+                                    <a href="https://reddit.com/submit?text=1.%20{{list.shortlistItem[0]?.itemTitle}}%20%20%0a2.%20{{list.shortlistItem[1]?.itemTitle}}%20%20%0a3.%20{{list.shortlistItem[2]?.itemTitle}}%20%20%0a%0aCheck the complete list%3a%20%20%0awww.listdropper.com/lists/{{listid}}&title={{list.listTitle}}"
+                                        target="blank" class="m-2 btn btn-outline-dark btn-lg"><i
+                                            class="bi-reddit text-black"></i> Reddit</a>
+                                </div>
+                            </div>
+                            <div row>
+                                <div class="col text-center">
+                                    <a href="https://api.whatsapp.com/send?text={{list.listTitle}}%0a1.%20{{list.shortlistItem[0]?.itemTitle}}%0a2.%20{{list.shortlistItem[1]?.itemTitle}}%0a3.%20{{list.shortlistItem[2]?.itemTitle}}%0a%0aCheck the complete list%3a%0awww.listdropper.com/lists/{{listid}}"
+                                        target="blank" class="m-2 btn btn-outline-dark btn-lg"><i
+                                            class="bi-whatsapp text-black"></i> Whatsapp</a>
+                                    <a href="https://www.facebook.com/sharer/sharer.php?u=www.listdropper.com/lists/{{listid}}&t={{list.listTitle}}%0a1.%20{{list.shortlistItem[0]?.itemTitle}}%0a2.%20{{list.shortlistItem[1]?.itemTitle}}%0a3.%20{{list.shortlistItem[2]?.itemTitle}}%0a%0aCheck the complete list%3a"
+                                        target="blank" class="m-2 btn btn-outline-dark btn-lg"><i
+                                            class="bi-facebook text-black"></i> Facebook</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <!-- <small>www.listdropper.com/lists/{{listid}}</small> -->
+                            <div #container>
+                                <button *ngIf="!copy" (cbOnSuccess)="copied($event)" class="btn btn-dark" ngxClipboard
+                                    [cbContent]="'www.listdropper.com/lists/'+listid" [container]="container">
+                                    <div class="copy-code text-white">COPY LINK</div>
+                                </button>
+                            </div>
+                            <div #container>
+                                <button *ngIf="copy" class="btn btn-success" ngxClipboard
+                                    [cbContent]="'www.listdropper.com/lists/'+listid" [container]="container">
+                                    <div class="copy-code text-white">COPIED!</div>
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
+
+
+
+                </div>
+                <hr class="mx-3 my-n1"/>
+
+                <div class="card-body pt-4">
+                    <h5 class="card-title p-2 mt-1"><b>{{list.listTitle}}</b></h5>
+                    <p class="text-end my-n1"> <small class="text-gray">{{list.shortlistLastChanged.$date
+                            | dateago }}</small></p>
+                    <!-- <img class="card-img-top" #myImage [hidden]="myImage.isBugged" (error)="myImage.isBugged = true" src="{{sublist.subListImageUrl}}"> -->
+                    <div *ngFor="let shortlistItem of list.shortlistItem | slice:0:show_max; let ix=index "
+                        class="ml-3 pt-4 flex-column">
+                        <div class="card-title px-2">
+                            <div class="row align-items-center">
+                                <div *ngIf=" ix < 9" class="col-1 me-2">
+                                    <h5><span class="badge bg-dark">{{ix+1}}</span></h5>
+                                </div>
+                                <div *ngIf=" ix > 8" class="col-1 me-3">
+                                    <h5><span class="badge bg-dark">{{ix+1}}</span></h5>
+                                </div>
+                                <div class="col ps-3">
+                                    <span>
+                                        <h5>{{shortlistItem.itemTitle}}</h5>
+                                    </span>
+                                </div>
+                            </div>
+                            <div *ngFor="let itemComment of shortlistItem.itemComment  | slice:0:3; let iy=index ">
+
+                                <!-- comment stuff -->
+                                <div class="pt-2"><small><b><a
+                                                [routerLink]="['/listdetails', listid, itemComment.itemCommentCreator]"
+                                                *ngIf="itemComment.itemCommentText" class="text-muted">
+                                                {{itemComment.itemCommentCreator}}</a></b></small></div>
+                                <div class="ps-2 pb-1" *ngIf="itemComment.itemCommentText">
+                                    <p><small [ngClass]="{ 'line-clamp-3':  !isCollapsed[ix] }"
+                                            [innerHTML]="itemComment.itemCommentText | clickableurls"></small></p>
+                                </div>
+                                <div class="ps-2" *ngIf="itemComment.itemCommentText">
+                                    <small>
+                                        <i class="d-flex justify-content-around">
+                                            <span
+                                                *ngIf="!itemComment.itemCommentText || itemComment.itemCommentText && itemComment.itemCommentText.length<191"
+                                                class="card-link">
+                                                <i class="ps-1 bi bi-caret-down"
+                                                    style="font-size: 16px; color: white;"></i></span>
+                                            <a *ngIf="itemComment.itemCommentText && itemComment.itemCommentText.length>190"
+                                                class="card-link" (click)="isCollapsed[ix] = !isCollapsed[ix]">
+                                                <span *ngIf="!isCollapsed[ix]"><i class="ps-1 bi bi-caret-down"
+                                                        style="font-size: 16px; color: black;"></i></span>
+                                                <span *ngIf="isCollapsed[ix]"><i class="ps-1 bi bi-caret-up"
+                                                        style="font-size: 16px; color: black;"></i></span>
+                                            </a>
+                                            <a *ngIf="itemComment.commentsCount>0" class="card-link"
+                                                [routerLink]="['/item', listid, itemComment.itemCommentCreator, itemComment.itemCommentId]">
+                                                {{itemComment.commentsCount}}
+                                                <i class="bi-chat-left-text ps-1"
+                                                    style="font-size: 16px; color: black;"></i>
+                                            </a>
+                                            <a *ngIf="itemComment.commentsCount==0" class="card-link"
+                                                [routerLink]="['/item', listid, itemComment.itemCommentCreator, itemComment.itemCommentId]">
+                                                <i class="bi-chat-left-text" style="font-size: 16px; color: black;"></i>
+                                            </a>
+                                        </i>
+                                    </small>
+                                </div>
+                                <!-- end of comment stuff -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="p-2">
+                    <div class="card-body px-0 d-flex justify-content-around align-items-center">
+                        <a *ngIf="!show_max_clicked" class="card-link text" (click)="showMax()">ALL ITEMS
+                            ({{listcount}})</a>
+                        <a *ngIf="show_max_clicked" class="card-link text" (click)="showMin()">ONLY TOP 3</a>
+                        <a href="" *ngIf="showEditlink" [routerLink]="['/edit', listid]" class="btn btn-dark">edit
+                            your
+                            list</a>
+                        <a href="" *ngIf="!showEditlink" [routerLink]="['/drop', listid]" class="btn btn-dark">drop your
+                            list</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

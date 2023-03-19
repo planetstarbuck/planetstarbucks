@@ -1,0 +1,35 @@
+  <app-my-stuff></app-my-stuff>
+<br>
+
+<div *ngIf="!listsgathered && !commentsgathered && !chaptersgathered">
+  <br>
+  <app-loading></app-loading>
+</div>
+
+<div *ngIf="listsgathered && chaptersgathered && commentsgathered">
+
+<div class="d-none d-sm-block">
+<div class=" container gap-4 d-flex  justify-content-center align-items-center text-center">
+  <h4><span class="fs-1">{{chapters.length}}</span><br><span class="fw-bold">chapters</span> followed</h4><h4><span class="fs-1">{{lists.length}}</span><br><span class="fw-bold">lists</span> dropped</h4><h4><span class="fs-1">{{comments.length}}</span><br><span class="fw-bold">comments</span> placed</h4>
+  </div></div>
+
+  <div class="d-block d-sm-none ">
+  <div class="container flex-column gap-4 d-flex  justify-content-center align-items-center text-center">
+    <h4><span class="fs-1">{{chapters.length}}</span><br><span class="fw-bold">chapters</span> followed</h4><h4><span class="fs-1">{{lists.length}}</span><br><span class="fw-bold">lists</span> dropped</h4><h4><span class="fs-1">{{comments.length}}</span><br><span class="fw-bold">comments</span> placed</h4>
+    </div></div>
+
+
+    <br>
+
+  <div class="pt-4 container gap-4 p-2 d-flex  justify-content-center align-items-center text-start">
+    <h2><span class="fw-bold">{{username}}</span></h2></div> 
+    <div class="container gap-4 px-2 d-flex  justify-content-center align-items-center text-start">
+   <p class="fst-italic fs-6">joined: <p class="fs-6">{{date_joined.replace(' ', 'T') | date:'longDate'}}</p></div>
+<br>
+<div class="container gap-4 d-flex  justify-content-around align-items-center ">
+  <a href class="nav-link" (click)="logout()" class="btn-sm">LOG OUT</a>
+ </div>
+<br><br>
+
+
+</div>

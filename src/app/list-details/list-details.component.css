@@ -1,0 +1,8 @@
+.my-n1 {
+    margin-top: -0.25rem !important;
+    margin-bottom: -0.75rem !important;
+  }
+
+  .dropdown-toggle::after{
+    content:initial
+ }

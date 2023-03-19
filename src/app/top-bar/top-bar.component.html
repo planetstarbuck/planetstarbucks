@@ -1,0 +1,15 @@
+<!-- https://hexcolorpedia.com/color/F0F7FE/    #c0f9cb-->
+<nav class="navbar sticky-top navbar-light clearfix" style="background-color: #a8adfe; padding-top: env(safe-area-inset-top) !important;">
+  <div class="container justify-content-evenly align-items-center">
+    <div class="me-auto py-3"><span [routerLink]="['/']"> <img class="img  px-2 mx-3" style="max-height: 74px; max-width: 111px;"  src="/../assets/listdropper-menu-logo.png" alt="Home"></span></div>
+    <div class="py-0 py-sm-2"><span [routerLink]="['/my-stuff']" class="btn btn-outline-dark btn-sm text-nowrap position-relative" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: false }">MY STUFF
+      <span *ngIf="notificationcount && notificationcount>0" class="position-absolute  top-0 start-100 translate-middle badge rounded-pill bg-primary">
+        {{notificationcount}}
+    <span class="visually-hidden">unread messages</span>
+    </span>
+    </span></div>
+    <div class="p-3 d-none d-md-block"><span [routerLink]="['/drop']" class="btn btn-outline-dark btn-sm" [routerLinkActive]="['active']">DROP</span></div>
+    <div class="ms-auto p-2"><span [routerLink]="['/search']"  class="btn " [routerLinkActive]="['active']">  <i class="bi-search" style="font-size: 19.5px; color: black;"></i> </span></div>
+    <div class="p-2 btn-sm d-none d-md-block" *ngIf="!isLoggedIn"><span [routerLink]="['/login']"  class="text-black text-nowrap" [routerLinkActive]="['active']">LOG IN</span></div>      
+</div>
+</nav>

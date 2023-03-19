@@ -1,0 +1,35 @@
+<div *ngIf=list>
+    <div *ngFor="let sublist of list.sublist">
+        <div *ngIf="sublist.subListId == 1">
+        <p></p>
+    <div class="card border-secondary"  style="width: 18rem;">
+        <div class="card-header d-flex justify-content-between align-items-center ">
+           <i><b>{{sublist.subListCreator | uppercase}}</b></i><span class="ml-auto p-2"> <button type="button"
+                    class="btn btn-outline-dark btn-sm ">SAVE</button></span></div>
+        <div class="card-body">
+            <h6 class="card-title">{{list.listTitle}}</h6>
+            <img class="card-img-top" #myImage [hidden]="myImage.isBugged" (error)="myImage.isBugged = true" src="{{sublist.subListImageUrl}}">
+        </div>
+        <div *ngFor="let item of sublist.item | slice:0:3; let iy=index " class="ml-2 flex-column">
+            <div class="p-2 align-items-center">
+                <div class="card-title">
+                    <h5><div class="bd-highlight badge badge-dark "> {{iy+1}}</div>
+                        {{item.itemTitle}}</h5>
+                </div>
+                <!-- <small>{{ (item.itemContext.length>150)? (item.itemContext | slice:0:150)+'...':(item.itemContext) }}
+                </small>
+                <div class="p-2">
+                    <small>
+                        <a class="card-link" [routerLink]="['/lists', list.id, sublist.subListId]">
+                            Read more</a></small>
+                </div> -->
+            </div>
+        </div>
+        <div class="card-body d-flex justify-content-around align-items-center">
+            <a href="#" class="card-link text-dark" [routerLink]="['/longlist', list.listId]">4-10</a>
+            <a href="" [routerLink]="['/drop', list.listId - 1]" class="btn btn-primary btn-dark btn-sm">DROP YOUR LIST</a>
+</div>
+        </div>
+    </div>
+</div>
+</div><br>

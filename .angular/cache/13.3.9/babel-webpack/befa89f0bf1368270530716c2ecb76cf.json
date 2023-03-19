@@ -1,0 +1,1 @@
+{"ast":null,"code":"typeof console !== 'undefined' && console && console.warn && console.warn('\"linkifyjs/string\" is deprecated in v3. Please install \"linkify-string\" instead');\nmodule.exports = require('./lib/linkify-string');","map":null,"metadata":{},"sourceType":"script"}

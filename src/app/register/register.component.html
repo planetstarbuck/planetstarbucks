@@ -1,0 +1,97 @@
+
+<br><div class="card border-0 mx-auto" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+    <form
+      *ngIf="!isSuccessful"
+      name="form"
+      (ngSubmit)="f.form.valid && onSubmit()"
+      #f="ngForm"
+      novalidate
+    >
+      <div class="form-group">
+        <br>
+        <label for="username">Screen name</label>
+        <input
+          type="text"
+          class="form-control"
+          name="username"
+          autocomplete="username"
+          [(ngModel)]="form.username"
+          required
+          minlength="3"
+          maxlength="20"
+          #username="ngModel"
+        />
+        <div *ngIf="username.errors && f.submitted">
+          <div class="alert alert-primary" role="alert" *ngIf="username.errors.required">Username is required</div>
+          <div class="alert alert-primary" role="alert" *ngIf="username.errors.minlength">
+            Username must be at least 3 characters
+          </div>
+          <div class="alert alert-primary" role="alert" *ngIf="username.errors.maxlength">
+            Username must be at most 20 characters
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          name="email"
+          autocomplete="email"
+          [(ngModel)]="form.email"
+          required
+          email
+          #email="ngModel"
+        />
+        <div *ngIf="email.errors && f.submitted">
+          <div class="alert alert-primary" role="alert" *ngIf="email.errors.required">Email is required</div>
+          <div class="alert alert-primary" role="alert" *ngIf="email.errors.email">
+            Email must be a valid email address
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <div  class="d-flex justify-content-center align-items-baseline ">
+          <div class="col d-flex">
+        <input
+        [type]="hide ? 'password' : 'text'" 
+          class="form-control"
+          name="password"
+          autocomplete="new-password"
+          [(ngModel)]="form.password"
+          required
+          minlength="6"
+          #password="ngModel"
+        /> 
+        <a *ngIf="!hide" (click)="passwordHideSwitch()" class="btn btn-link"><i class="bi bi-eye-fill"></i>
+        </a>
+        <a *ngIf="hide" (click)="passwordHideSwitch()" class="btn btn-link"><i class="bi bi-eye-slash-fill"></i>
+        </a>
+        </div>
+      </div>
+      <div *ngIf="password.errors && f.submitted">
+        <div class="alert alert-primary" role="alert" *ngIf="password.errors.required">Password is required</div>
+        <div class="alert alert-primary" role="alert" *ngIf="password.errors.minlength">
+          Password must be at least 6 characters
+        </div>
+      </div>
+      </div>
+      <div class="alert alert-primary" role="alert" *ngIf="f.submitted && isSignUpFailed">
+        Signup failed: {{ errorMessage }}
+      </div>
+      <div class="form-group"><br>
+        <span class="d-flex justify-content-center pb-5">
+          <button class="btn btn-dark btn-primary">
+            CREATE YOUR ACCOUNT
+          </button>
+        </span>
+      </div>
+    </form>
+
+    <div class="alert alert-primary" *ngIf="isSuccessful">
+      Your registration is successful!
+    </div>
+    <span>Have an account? Log in <a [routerLink]="['/login']">here</a></span>
+<p></p>
+</div>

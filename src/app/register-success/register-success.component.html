@@ -1,0 +1,30 @@
+<div class="card border-0 mx-auto" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+
+<div *ngIf="loaded && success">
+<h4 class="pt-5">Successfully confirmed {{email}}!</h4>
+<p class="pt-4">Start your first list or explore one of the options on top.</p>
+<!-- <p class="pt-4">Start your first (private) list or explore one of the three options on top (feed / my stuff / search).</p> -->
+<div class="py-3 d-flex justify-content-around align-items-center">
+<a [routerLink]="['/drop']" class="btn btn-dark fw-bold m-0">DROP A LIST</a>
+<!-- <a [routerLink]="['/']" class="btn btn-outline-dark btn-sm m-0">TO FEED</a> -->
+</div>
+</div>
+
+
+<div *ngIf="!success && loaded">
+    <h4 class="pt-5">E-mail not confirmed</h4>
+    <p class="pt-4">It could be that your link to <b>{{email}}</b> is expired, try resend:</p>
+    <div class="pb-3 d-flex justify-content-around align-items-center">
+        <span *ngIf="!send && !send_successful" class="pt-2"><a (click)=resendEmail(email) class="btn btn-dark fw-bold">RESEND</a></span>
+        <span *ngIf="send && send_successful" class="pt-2"><span class="btn btn-success"><i class="bi-check-lg text-white" width="32"
+            height="32"></i> SENT!</span></span>
+        <span *ngIf="send && !send_successful" class="pt-2"><span class="btn btn-danger"><i class="bi-x-lg text-white" width="32"
+            height="32"></i> NOT SENT!</span></span>
+    </div>
+</div>
+
+
+<p> </p> 
+<p> </p>
+<p> </p>
+</div>

@@ -1,0 +1,83 @@
+<div class="card border-0 mx-auto" style="background-color: #F0F7FE;">
+
+    <app-my-stuff></app-my-stuff>
+
+
+    <div class="d-flex justify-content-center">
+        <div class="col pt-3">
+            <div *ngIf="!loading" class="p-0">
+                <div *ngIf="notifications">
+                    <div *ngFor="let notification of notifications.slice().reverse()">
+                        <span class="p-4"></span>
+                        <div class="card border-0 mx-auto pt-1" style="width: 90%; max-width: 22rem;">
+                            <div class="card-body pb-2">
+
+                                <div class="row align-items-center p-2">
+                                    <div class="col my-auto">
+                                        <h5 class="card-title my-auto"><b>{{notification.title}}</b></h5>
+                                    </div>
+                                    <div class="col-4 ms-2 my-auto">
+                                        <p class="text-gray my-auto">{{notification.date.$date
+                                            | dateago }}</p>
+                                    </div>
+                                </div>
+                                <!-- <p class="text-end my-n1"> <small>{{notification.date.$date
+                                        | dateago }}</small></p> -->
+                                <div class="pt-3 flex-column">
+                                    <div class="row p-2 align-items-center">
+                                        <div *ngIf="!notification.read" class="col-1 me-3">
+                                            <i style="font-size: 21px; color: black;"
+                                                class="bi bi-envelope position-relative"><span
+                                                    class="position-absolute top-0 start-100 translate-middle p-2 bg-primary border border-light rounded-circle">
+                                                    <span class="visually-hidden">New alerts</span>
+                                                </span></i>
+                                        </div>
+                                        <div *ngIf="notification.read" class="col-1 me-3">
+                                            <i style="font-size: 21px; color: black;" class="bi bi-envelope-open"></i>
+                                        </div>
+                                        <div class="col">
+                                            <span>{{notification.text}}</span>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="card-body text-center pt-2">
+                                        <div class="d-flex justify-content-between py-1 pt-3">
+                                            <a class="px-3 my-auto text-nowrap"
+                                                (click)="goToLinkAndMarkSeen(notification._id.$oid, notification.link)">
+                                                {{notification.link_label}}</a>
+                                            <span *ngIf="!notification.read" class="ml-auto my-auto px-3"> <button
+                                                    class="btn btn-outline-dark btn-sm"
+                                                    style="font-size: 11px ! important; position: relative;"
+                                                    (click)="markSeen(notification._id.$oid)">MARK SEEN</button></span>
+                                            <span *ngIf="notification.read" class="ml-auto my-auto px-3"> <button
+                                                    class="btn btn-outline-dark btn-sm text-nowrap"
+                                                    style="font-size: 11px ! important; position: relative;"
+                                                    (click)="markUnseen(notification._id.$oid)">MARK
+                                                    UNSEEN</button></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-2"></div>
+                    </div>
+                    <div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+                            <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+                        </span>
+                    </div>
+
+                </div>
+                <!-- <app-bottom-bar class="pt-2"></app-bottom-bar> -->
+            </div>
+
+            <div *ngIf="loading">
+                <br>
+                <div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+                        <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+                    </span>
+                </div>
+                <app-loading></app-loading>
+            </div>
+        </div>

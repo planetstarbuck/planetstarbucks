@@ -1,0 +1,146 @@
+<br>
+
+<div class="card mx-auto  border-0" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+
+  <div id="search-component">
+    <label for="search-box">Search</label>
+
+    <input #searchBox [(ngModel)]="term" id="search-box" (input)="search(searchBox.value)" class="form-control form-control " />
+  </div>
+</div>
+<div *ngIf="loading">
+  <br>
+  <app-loading></app-loading>
+</div>
+<div class="card mx-auto  border-0" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+  <div class="alert alert-primary" *ngIf="searchBox.value.length > 0 && (lists$ | async)?.length === 0">No Results</div>
+
+
+  <div class="d-flex justify-content-center">
+    <div class="col pt-3">
+        <div *ngFor="let list of lists$ | async; else loading">
+          <div *ngIf="!loading" class="p-0">
+
+          <!-- <div class="card mx-auto border-0 pb-1 d-flex flex-row-reverse  bd-highlight"
+              *ngIf="list.followedChapters && list.followedChapters.length>0 || list.nonFollowedChapters && list.nonFollowedChapters.length>0; else noChapters"
+              style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+              <span *ngIf="list.followedChapters && list.followedChapters.length<3" class="text-nowrap">
+                <span *ngFor="let chapter of list.followedChapters; let i=index">
+                  <span class="p-1"><span class="badge rounded-pill bg-none text-muted card-link" style="color: #F0F7FE;"
+                      [routerLink]="['/chapter', chapter]"><i class="bi-check-lg text-muted"></i>
+                      {{chapter}}</span></span>
+                </span>
+              </span>
+              <span *ngIf="list.followedChapters && list.followedChapters.length>2" class="text-nowrap"
+                #collapse="ngbCollapse" [(ngbCollapse)]="isFollowedCollapsed[i]">
+                <span class="p-1"><span class="badge rounded-pill bg-none text-muted card-link"
+                    (click)="collapse.toggle()" [attr.aria-expanded]="!isFollowedCollapsed[i]"><i class=" bi-check-lg
+                      text-muted"></i> {{list.followedChapters.length}} chapters</span></span>
+              </span>
+              <span *ngIf="list.followedChapters && isFollowedCollapsed[i] && list.followedChapters.length>2"
+                class="text-nowrap d-flex align-items-end flex-column">
+                <span *ngFor="let chapter of list.followedChapters; let i=index">
+                  <div class="px-1 pb-1"><span class="badge rounded-pill bg-none text-muted card-link"
+                      [routerLink]="['/chapter', chapter]"><i class="bi-check-lg text-muted"></i>
+                      {{chapter}}</span></div>
+                </span>
+              </span>
+              <span *ngIf="list.nonFollowedChapters && list.nonFollowedChapters.length<3" class="text-nowrap">
+                <span *ngFor="let chapter of list.nonFollowedChapters; let i=index">
+                  <span class="p-1"><span class="badge rounded-pill bg-none text-muted card-link"
+                      [routerLink]="['/chapter', chapter]">
+                      {{chapter}}</span></span>
+                </span>
+              </span>
+              <span *ngIf="list.nonFollowedChapters && list.nonFollowedChapters.length>2" class="text-nowrap"
+                #collapse="ngbCollapse" [(ngbCollapse)]="isUnfollowedCollapsed[i]">
+                <span class="p-1"><span class="badge rounded-pill bg-none text-muted card-link"
+                    (click)="collapse.toggle()"
+                    [attr.aria-expanded]="!isUnfollowedCollapsed[i]">{{list.nonFollowedChapters.length}}
+                    chapters</span></span>
+              </span>
+              <span *ngIf="list.nonFollowedChapters && isUnfollowedCollapsed[i] && list.nonFollowedChapters.length>2"
+                class="text-nowrap d-flex align-items-end flex-column">
+                <span *ngFor="let chapter of list.nonFollowedChapters; let i=index">
+                  <div class="px-1 pb-1"><span class="badge rounded-pill bg-none text-muted card-link"
+                      [routerLink]="['/chapter', chapter]">
+                      {{chapter}}</span></div>
+                </span>
+              </span>
+            </div> -->
+
+          <!-- <ng-template #noChapters> -->
+          <span class="p-4"></span>
+          <!-- </ng-template>  -->
+
+          <div class="card border-0 mx-auto pt-1">
+            <div class="card-body pb-2">
+
+              <div class="row align-items-center p-2">
+                <div class="col my-auto">
+                  <h5 class="card-title my-auto"><b>{{list.listTitle}}</b></h5>
+                </div>
+                <div *ngIf="list.sublistCreators" class="col-2 ms-2 my-auto">
+                  <p class="text-gray my-auto">{{list.sublistCreators.length}}<i
+                      class="text-gray ps-1 bi bi-person-lines-fill"></i></p>
+                </div>
+              </div>
+
+
+              <img class="card-img-top" #myImage [hidden]="myImage.isBugged" (error)="myImage.isBugged = true"
+                src="{{list.listImageUrl}}">
+
+              <div *ngIf="list.shortlist" class="pt-3 flex-column">
+                <div *ngFor="let shortlist of list.shortlist | slice:0:3; let iy=index "
+                  class="row p-2 align-items-start">
+                  <div *ngIf="shortlist.itemTitle" class="col-1 me-2">
+                    <span class="badge bg-dark">{{iy+1}}</span>
+                  </div>
+                  <div *ngIf="shortlist.itemTitle" class="col">
+                    <span>{{shortlist.itemTitle}}</span>
+                  </div>
+                  <div *ngIf="!shortlist.itemTitle" class="col-1 me-2">
+                    <i class="bi-lightning-charge-fill" style="font-size: 19.5px; color: black;"></i>
+                  </div>
+                  <div *ngIf="!shortlist.itemTitle" class="col">
+                    <span><i>list request - add items</i></span>
+                  </div>
+                </div>
+                <div class="card-body text-center pt-2">
+                  <div class="d-flex justify-content-between py-1 pt-3">
+                    <a class="px-3 my-auto" [routerLink]="['/lists', list.shortlistId]">
+                      READ MORE</a>
+                    <span>
+                      <span *ngIf="isLoggedIn && saved_lists.includes(list.shortlistId)" class="ml-auto my-auto px-3">
+                        <button class="btn btn-outline-dark btn-sm" style="position: relative;"
+                          (click)="removeFromSaved(list.shortlistId)"><i class="bi-check-lg text-black" width="32"
+                            height="32"></i></button></span>
+                      <span *ngIf="isLoggedIn && !saved_lists.includes(list.shortlistId)" class="ml-auto my-auto px-3">
+                        <button class="btn btn-outline-dark btn-sm" style="position: relative;"
+                          (click)="addToSaved(list.shortlistId)">SAVE</button></span>
+                      <span *ngIf="!isLoggedIn" class="ml-auto my-auto px-3"> <button
+                          class="btn btn-outline-dark btn-sm" style="position: relative;"
+                          [routerLink]="['/login']">SAVE</button></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-2"></div>
+      </div>
+      <div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+          <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+        </span>
+      </div>
+    </div>
+
+    <!-- <app-bottom-bar class="pt-2"></app-bottom-bar> -->
+  </div>
+
+
+  <div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+      <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+    </span></div>
+</div>

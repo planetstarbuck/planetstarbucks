@@ -18,15 +18,27 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "aot": false,
-            "assets": [
+            "aot": true,
+            "assets": [              
+              "src/.well-known",
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest",
+              "src/manifest.json",
+              {
+                "glob": "**/*",
+                "input": "src/.well-known",
+                "output": ".well-known/"
+              }
             ],
             "styles": [
+              "./node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json"
           },
           "configurations": {
             "production": {
@@ -39,7 +51,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -84,9 +95,12 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
+            "assets": [              
+              "src/.well-known",
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.css"
@@ -120,6 +134,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "listdropper"
+    }
+  },
+  "defaultProject": "listdropper",
+  "cli": {
+    "analytics": false
+  }
 }

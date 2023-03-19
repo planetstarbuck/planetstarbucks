@@ -1,0 +1,50 @@
+<br><div class="card border-0 mx-auto" style="width: 90%; max-width: 22rem;">
+  <span class="pt-1" *ngIf="!isLoggedIn"><b>No account yet? Register <a [routerLink]="['/register']">here</a></b></span>
+  <br><br>
+  <form *ngIf="!isLoggedIn" name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+    <div class="form-group">
+      <label for="username">Username</label>
+      <input id="username" type="text" class="form-control" name="username" autocomplete="username" [(ngModel)]="form.username" required
+        #username="ngModel" />
+      <div *ngIf="username.errors && f.submitted">
+        <div class="alert alert-primary" role="alert" *ngIf="username.errors.required">Username is required</div>
+      </div>
+    </div> 
+    <div class="form-group">
+      <div class="d-flex justify-content-between align-items-center">
+      <label for="password">Password</label>
+      <span style="font-size: 12px;"><a [routerLink]="['/forgotpassword']">Forgot password?</a></span>
+      </div>
+      <input id="password" type="password" class="form-control" name="password" autocomplete="current-password" [(ngModel)]="form.password" required minlength="6"
+        #password="ngModel" />
+      <div *ngIf="password.errors && f.submitted">
+        <div class="alert alert-primary" role="alert" *ngIf="password.errors.required">Password is required</div>
+        <div class="alert alert-primary" role="alert" *ngIf="password.errors.minlength">
+          Password must be at least 6 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="alert alert-primary" role="alert" *ngIf="f.submitted && isLoginFailed">
+        Login failed: {{ errorMessage }}
+      </div>
+    </div>
+    <div class="form-group"><br>
+      <span class="d-flex justify-content-center pb-5">
+        <button class="btn btn-dark btn-primary">
+          LOGIN
+        </button>
+        <span *ngIf="isBusy" class="m-2 spinner-border spinner-border-sm"></span>
+      </span>
+
+    </div>
+  </form>
+
+  <div class="alert alert-primary" *ngIf="isLoggedIn">
+    Logged in!
+  </div>
+  <div class="col-md-12" *ngIf="isLoggedIn">
+    <p class="text-center">
+      <br> Click <a [routerLink]="['/drop']">here</a> to drop a new list<br><br></p>
+  </div>
+</div>

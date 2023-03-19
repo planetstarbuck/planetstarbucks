@@ -1,0 +1,89 @@
+ <app-my-stuff></app-my-stuff>
+
+
+<app-feed-shell [lists]="lists" [lists]="lists" [button_text]="button_text" [other_button]="other_button" [startup]="startup"  [isLoggedIn]="isLoggedIn" [lists]="lists"
+  (unSaveEvent)="removeFromSaved($event)" (saveEvent)="addToSaved($event)">
+</app-feed-shell>
+
+<div *ngIf="lists.length == 0 && startup == false">
+    <br>
+    <p class="text-center">
+        Saved lists show up here<br><br>
+    </p>
+
+    <div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+            <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+        </span>
+    </div>
+</div>
+
+
+
+<!-- <app-feed-shell [lists]="lists" [lists]="lists"   [startup]="startup"  [isLoggedIn]="isLoggedIn" [saved_lists]="saved_lists" [isFollowedCollapsed]="isFollowedCollapsed" [isUnfollowedCollapsed]="isUnfollowedCollapsed" [lists]="lists"
+  (unSaveEvent)="removeFromSaved($event)" (saveEvent)="addToSaved($event)">
+</app-feed-shell> -->
+
+
+<!-- <div *ngIf="loading">
+    <br>
+    <app-loading></app-loading>
+</div> -->
+
+<!-- <div *ngIf="lists.length == 0 && startup == false">
+    <br>
+    <p class="text-center">
+        Saved lists show up here<br><br>
+    </p>
+
+    <div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+            <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+        </span>
+    </div>
+</div>
+
+<div *ngIf="lists.length">
+    <div class="card border-0 mx-auto" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+        <div *ngFor="let list of lists.slice()">
+            <p></p>
+            <div class="card mx-auto pt-1 shadow-sm border-0 ">
+                <div class="card-body">
+                    <div class="row align-items-center p-2">
+                        <div class="col my-auto">
+                          <h5 class="card-title my-auto">{{list.listTitle}}</h5>
+                        </div>
+                        <div class="col-2 ms-2 my-auto">
+      <p class="text-gray my-auto">{{list.sublistCreators.length}}<i
+                              class="text-gray ps-1 bi bi-person-lines-fill"></i></p>
+                        </div>
+                      </div>
+                    <img class="card-img-top" #myImage [hidden]="myImage.isBugged" (error)="myImage.isBugged = true"
+                        src="{{list.listImageUrl}}">
+
+                    <div class="pt-3 flex-column">
+                        <div *ngFor="let shortlist of list.shortlist | slice:0:3; let iy=index "
+                            class="row p-2 align-items-start">
+                            <div class="col-1 me-2">
+                                <span class="badge bg-dark">{{iy+1}}</span>
+                            </div>
+                            <div class="col">
+                                <span>{{shortlist.itemTitle}}</span>
+                            </div>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="d-flex justify-content-between py-1 pt-3">
+                                <a class="px-3 my-auto" [routerLink]="['/lists', list.shortlistId]">
+                                    READ MORE</a>
+                                <span class="ml-auto my-auto px-3"> <button 
+                                        class="btn btn-outline-dark btn-sm" style="position: relative;"
+                                        (click)="removeFromSaved(list.shortlistId)">UNSAVE</button></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed-bottom p-2"><span class="d-flex justify-content-center">
+        <button class="btn-dark m-4 d-md-none" [routerLink]="['/drop']">DROP</button>
+    </span></div> -->

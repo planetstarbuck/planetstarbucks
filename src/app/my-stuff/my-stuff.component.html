@@ -1,0 +1,13 @@
+    <div class="pt-4 container d-flex  justify-content-center align-items-center ">
+      <div class=""><a [routerLink]="['/my-stuff/profile']"  class="btn p-0 pe-2" [routerLinkActive]="['active']" #profile="routerLinkActive">  <i *ngIf="profile.isActive" class="bi-person-fill"  style="font-size: 19.5px; color: black;"></i><i *ngIf="!profile.isActive" class="bi-person"  style="font-size: 19.5px; color: black;"></i> </a></div>
+      <div class="p-1 d-block d-sm-none"><a [routerLink]="['/my-stuff/chapters']" class="btn btn-outline-dark btn-sm" style="font-size: 11px ! important; " [routerLinkActive]="['active']">CHAPTERS</a></div>
+        <div class="p-2 d-none d-sm-block"><a [routerLink]="['/my-stuff/chapters']" class="btn btn-outline-dark btn-sm" [routerLinkActive]="['active']">CHAPTERS</a></div>
+        <div class="p-1 d-block d-sm-none"><a [routerLink]="['/my-stuff/drops']" class="btn btn-outline-dark btn-sm" style="font-size: 11px ! important; " [routerLinkActive]="['active']">DROPS</a></div>
+        <div class="p-2 d-none d-sm-block"><a [routerLink]="['/my-stuff/drops']" class="btn btn-outline-dark btn-sm" [routerLinkActive]="['active']">DROPS</a></div>
+        <div class="p-1 d-block d-sm-none"><a [routerLink]="['/my-stuff']" class="btn btn-outline-dark btn-sm" style="font-size: 11px ! important; " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">SAVED</a></div>
+        <div class="p-2 d-none d-sm-block"><a [routerLink]="['/my-stuff']" class="btn btn-outline-dark btn-sm" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{ exact: true }">SAVED</a></div>
+        <div class=""><a [routerLink]="['/my-stuff/notifications']"  class="btn position-relative p-0 ps-2" [routerLinkActive]="['active']" #notifications="routerLinkActive">  <i *ngIf="!notifications.isActive" class="bi-envelope" style="font-size: 19.5px; color: black;"></i><i *ngIf="notifications.isActive" class="bi-envelope-fill" style="font-size: 19.5px; color: black;"></i><span *ngIf="notificationcount && notificationcount>0" class="position-absolute  top-0 start-100 translate-middle badge rounded-pill bg-primary">
+            {{notificationcount}}
+        <span class="visually-hidden">unread messages</span>
+        </span></a></div>
+      </div>

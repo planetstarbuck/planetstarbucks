@@ -1,0 +1,19 @@
+p {
+    white-space: pre-line;
+    /* or pre-wrap or pre-line */
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/white-space */
+  }
+
+
+
+  .badge-outline {
+    color: black;
+    border: 2px solid #999;
+    background-color: transparent;
+}
+
+
+.my-n1 {
+  margin-top: -0.25rem !important;
+  margin-bottom: -0.75rem !important;
+}

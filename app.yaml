@@ -1,0 +1,50 @@
+runtime: python27
+api_version: 1
+threadsafe: true
+handlers:
+
+  # - url: /\.well\-known
+  #   static_dir: \.well\-known
+    
+#   - url: /.*/(.*apple\-app\-site\-association)   #   this works
+
+  - url: /.*/(.*apple\-app\-site\-association)   #   this works
+    static_files: apple-app-site-association
+    upload: apple-app-site-association
+    secure: always
+    redirect_http_response_code: 301
+    http_headers:
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+
+
+  - url: /(.*\.(gif|png|jpg|ico|css|js)(|\.map))$
+    secure: always
+    redirect_http_response_code: 301
+    static_files: dist/listdropper/\1
+    upload: dist/listdropper/(.*)(|\.map)
+    http_headers:
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+
+  - url: /(.*)
+    secure: always
+    redirect_http_response_code: 301
+    static_files: dist/listdropper/index.html
+    upload: dist/listdropper/index.html
+    http_headers:
+      Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+
+skip_files:
+  - e2e/
+  - node_modules/
+  - src/
+  - coverage
+  - ^(.*/)?\..*$
+  - ^(.*/)?.*\.json$
+  - ^(.*/)?.*\.md$
+  - ^(.*/)?.*\.yaml$
+  - ^LICENSE
+
+

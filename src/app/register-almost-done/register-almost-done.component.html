@@ -1,0 +1,19 @@
+<div class="card border-0 mx-auto" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+
+<h4 class="pt-5">Welcome to list dropper, {{username}}!</h4>
+
+<p class="pt-4">First, check <b>{{email}}</b> for a link to verify your e-mail. </p>
+<div class="card-body d-flex justify-content-around align-items-center">
+<span *ngIf="gmail" class="pe-4 pt-2"><a href="https://mail.google.com/mail/u/{{email}}/#search/from:noreply@listdropper.com"   target="_blank" class="btn btn-dark fw-bold">OPEN GMAIL</a></span>
+<span *ngIf="!send && !send_successful" class="pt-2"><a (click)=resendEmail(email) class="btn btn-outline-dark btn-sm">RESEND</a></span>
+<span *ngIf="send && send_successful" class="pt-2"><span class="btn btn-success btn-sm"><i class="bi-check-lg text-white" width="32"
+    height="32"></i> SENT!</span></span>
+<span *ngIf="send && !send_successful" class="pt-2"><span class="btn btn-danger btn-sm"><i class="bi-x-lg text-white" width="32"
+    height="32"></i> NOT SENT!</span></span>
+</div>
+<p> </p> 
+<p> </p>
+<p> </p> 
+</div> 
+
+

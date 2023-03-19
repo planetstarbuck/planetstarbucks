@@ -1,0 +1,53 @@
+<br><div class="card border-0 mx-auto" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+  <span class="pt-1" *ngIf="!isLoggedIn"><b>No account yet? Register <a [routerLink]="['/register']">here</a></b></span>
+  <br><br>
+  <form *ngIf="!isLoggedIn" [formGroup]="loginform" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="username">Username</label>
+      <input class="form-control" autocomplete="username" formControlName="username" (change)="loginform.controls['username'].setValue($event.target.value)">
+      <div *ngIf="loginform.controls['username'].errors && submitted">
+        <div class="alert alert-primary" role="alert" *ngIf="loginform.controls['username'].errors.required">Username is required</div>
+      </div>    
+    </div> 
+    <div>
+      <div class="d-flex justify-content-between align-items-center">
+      <label for="password">Password</label>
+      <span style="font-size: 12px;"><a [routerLink]="['/forgotpassword']">Forgot password?</a></span>
+      </div>
+      <input class="form-control" type="password" autocomplete="current-password" formControlName="password"  (change)="loginform.controls['password'].setValue($event.target.value)">
+      
+      <div *ngIf="submitted && loginform.controls['password'].errors">
+        <div class="alert alert-primary" role="alert" *ngIf="loginform.controls['password'].errors.required">Password is required</div>
+        <div class="alert alert-primary" role="alert" *ngIf="loginform.controls['password'].errors.minlength">
+          Password must be at least 6 characters
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="alert alert-primary" role="alert" *ngIf="submitted && isLoginFailed">
+        Login failed: {{ errorMessage }}
+      </div>
+    </div>
+    <div class="form-group"><br>
+      <span class="d-flex align-items-center justify-content-center pb-5">
+        <button class="btn btn-dark btn-primary">
+          LOGIN
+        </button>
+        <div *ngIf="isBusy" class="ms-3 spinner-border spinner-border-sm"></div>
+
+      </span>
+
+    </div>
+
+
+
+  </form>
+
+  <div class="alert alert-primary" *ngIf="isLoggedIn">
+    Logged in!
+  </div>
+  <div class="col-md-12" *ngIf="isLoggedIn">
+    <p class="text-center">
+      <br> Click <a [routerLink]="['/drop']">here</a> to drop a new list<br><br></p>
+  </div>
+</div>

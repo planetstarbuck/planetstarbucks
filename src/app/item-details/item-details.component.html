@@ -1,0 +1,219 @@
+<div *ngIf="loading">
+    <br>
+    <app-loading></app-loading>
+</div>
+<div *ngIf="list">
+    <!-- <div *ngIf="list.sublist?.length > 1">
+        <app-shortlist></app-shortlist>
+    </div> -->
+
+
+    <div class="card mx-auto border-0" style="width: 90%; max-width: 22rem; background-color: #F0F7FE;">
+        <p></p>
+
+
+        <div *ngFor="let sublist of list.sublist; let i=index" class="pt-2">
+            <p></p>
+            <div class="card mx-auto shadow-sm border-0">
+                <div class="card-header d-flex justify-content-end align-items-center">
+                    <b><i> <a class="ps-1" href=""
+                                [routerLink]="['/profile', sublist.subListCreator]">{{sublist.subListCreator}}</a></i></b>
+                    <span *ngIf="isLoggedIn && saved_lists.includes(listid)" class="p-2 ms-auto"> <button 
+                            class="btn btn-outline-dark btn-sm" style="position: relative;"
+                            (click)="removeFromSaved(listid)"><i class="bi-check-lg text-black" width="32"
+                                height="32"></i></button></span>
+                    <span *ngIf="isLoggedIn && !saved_lists.includes(listid)" class="p-2 ms-auto"> <button 
+                            class="btn btn-outline-dark btn-sm" style="position: relative;"
+                            (click)="addToSaved(listid)">SAVE</button></span>
+                    <span *ngIf="!isLoggedIn" class="p-2 ms-auto"> <button 
+                            class="btn btn-outline-dark btn-sm" style="position: relative;"
+                            [routerLink]="['/login']">SAVE</button></span>
+                    <!-- show only in case of mobile page:     <span class="d-md-none"> -->
+                    <span class="p-1"> <a href="#bannerformmodal" data-toggle="modal" data-target="#bannerformmodal"><i
+                                class="bi-box-arrow-up" style="color: black;"></i></a></span>
+                    <!-- Modal -->
+                    <div class="modal fade" id="bannerformmodal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true" >
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel"><i>{{list.listTitle}}</i></h5>
+                                    <button  class="btn-close" data-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div *ngFor="let item of sublist.item; let iy=index ">
+                                    <div *ngIf="item.commentId == commentId">
+                                <div class="modal-body d-flex justify-content-center">
+                                    <div row>
+                                        <div class="col text-center">
+                                            <a href="http://twitter.com/share?text={{list.listTitle}}%0a%23{{iy + 1}}%20-%20{{item.itemTitle}}%0a%0aSee this list-item%3a&url=www.listdropper.com/item/{{listid}}/{{sublist.subListCreator}}/{{commentId}}"
+                                                target="blank"  class="m-2 btn btn-outline-dark btn-lg"><i
+                                                    class="bi-twitter text-black"></i> Twitter</a>
+                                            <a href="https://reddit.com/submit?text={{list.listTitle}}%0a%23{{iy + 1}}%20-%20{{item.itemTitle}}%0a%0aSee this list-item%3a%0awww.listdropper.com/item/{{listid}}/{{sublist.subListCreator}}/{{commentId}}&title={{list.listTitle}}"
+                                                target="blank"  class="m-2 btn btn-outline-dark btn-lg"><i
+                                                    class="bi-reddit text-black"></i> Reddit</a>
+                                        </div>
+                                    </div>
+                                    <div row>
+                                        <div class="col text-center">
+                                            <a href="https://api.whatsapp.com/send?text={{list.listTitle}}%0a%23{{iy + 1}}%20-%20{{item.itemTitle}}%0a%0aSee this list-item%3a%0awww.listdropper.com/item/{{listid}}/{{sublist.subListCreator}}/{{commentId}}"
+                                                target="blank"  class="m-2 btn btn-outline-dark btn-lg"><i
+                                                    class="bi-whatsapp text-black"></i> Whatsapp</a>
+                                            <a href="https://www.facebook.com/sharer/sharer.php?u=www.listdropper.com/item/{{listid}}/{{sublist.subListCreator}}/{{commentId}}&t={{list.listTitle}}%0a%23{{iy + 1}}%20-%20{{item.itemTitle}}%0a%0aSee this list-item%3a"
+                                                target="blank"  class="m-2 btn btn-outline-dark btn-lg"><i
+                                                    class="bi-facebook text-black"></i> Facebook</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div></div>
+
+                                <div class="modal-footer">
+                                    <!-- <small>www.listdropper.com/lists/{{listid}}</small> -->
+                                    <div #container>
+                                        <button *ngIf="!copy" class="btn btn-outline-dark" ngxClipboard
+                                            [cbContent]="'www.listdropper.com/lists/'+listid"
+                                            [container]="container">COPY
+                                            LINK</button>
+                                    </div>
+                                    <div #container>
+                                        <button *ngIf="copy" class="btn btn-outline-success" ngxClipboard
+                                            [cbContent]="'www.listdropper.com/lists/'+listid"
+                                            [container]="container">copied!</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    
+                </div>
+                <hr class="mx-3 my-n1"/>
+                <div class="card-body pt-4">
+                    <span class="card-link text" [routerLink]="['/lists', listid]" skipLocationChange><i
+                            class="bi-arrow-left pe-1"></i>
+                        {{list.listTitle}}</span>
+                    <img class="card-img-top" #myImage [hidden]="myImage.isBugged" (error)="myImage.isBugged = true"
+                        src="{{list.listImageUrl}}">
+                </div>
+                <div *ngFor="let item of sublist.item; let iy=index " class="px-2 flex-column">
+
+
+                    <div *ngIf="item.commentId == commentId" class="card-title p-2 mt-1">
+                        <div class="row align-items-center">
+                            <div *ngIf=" iy < 9" class="col-1 me-2">
+                                <h5><span class="badge badge-outline">{{iy+1}}</span></h5>
+                            </div>
+                            <div *ngIf=" iy > 8" class="col-1 me-3">
+                                <h5><span class="badge badge-outline">{{iy+1}}</span></h5>
+                            </div>
+                            <div class="col ps-3">
+                                <span>
+                                    <h5 class="ps-1"><b>{{item.itemTitle}}</b></h5>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- comment stuff -->
+                        <div class="py-2" #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed">
+                            <p *ngIf="item.itemContext" [innerHtml]="item.itemContext | clickableurls">
+                            </p>
+                        </div>
+                        <div class="py-2" #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+                            <p *ngIf="item.itemContext"
+                                [innerHtml]="(item.itemContext.length>80)? (item.itemContext | clickableurls  | slice:0:80 )+'...':(item.itemContext) | clickableurls">
+                        </p>
+                        </div>
+                        <!-- <div class="pb-2 row"  *ngIf="item.itemContext"> -->
+                        <div class="pb-2 row">
+                            <small>
+                                <!-- <i class="d-flex justify-content-around">
+                                    <span *ngIf="!item.itemContext || item.itemContext && item.itemContext.length<81"
+                                        class="card-link" >
+                                        <i class="ps-1 bi bi-caret-down"
+                                            style="font-size: 16px; color: white;"></i></span>
+                                    <a *ngIf="item.itemContext && item.itemContext.length>80" class="card-link"
+                                         (click)="isCollapsed = !isCollapsed"
+                                        [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+                                        <span *ngIf="!isCollapsed"><i class="ps-1 bi bi-caret-down"
+                                                style="font-size: 16px; color: black;"></i></span>
+                                        <span *ngIf="isCollapsed"><i class="ps-1 bi bi-caret-up"
+                                                style="font-size: 16px; color: black;"></i></span>
+                                    </a>
+                                    <span>
+                                        <i class="ps-1 bi-chat-left-text" style="font-size: 16px; color: white;"></i>
+                                    </span>
+                                </i> -->
+                            </small>
+                        </div>
+                        <!-- end of comment stuff -->
+                    </div>
+                </div>
+
+                <div class="p-3 row align-items-center">
+                    <div *ngFor="let individualcomment of comment; let ic=index">
+                        <div class="me-2">
+                            <small class="text-gray"><b>{{individualcomment.commentCreator}}</b><b class="text-gray"> · </b>{{individualcomment.commentAdded.$date
+                                |
+                                dateago }}</small>
+                        </div>
+                        <div class="col ps-2 pb-3">
+                            <span>
+                                <p><small>{{individualcomment.commentContent}}
+                                </small></p>
+                            </span>
+                        </div>
+                    </div>
+
+
+
+                    <form *ngIf="showDropLink"  [formGroup]="newComment" (ngSubmit)="onSubmit()">
+                        <!-- <div formArrayName="comments">
+        <div *ngFor="let comment of commentArray.controls; let i=index" [formGroupName]="i"> -->
+
+                        <!-- LIST -->
+
+                        <span *ngIf="showDropLink"  class="d-flex align-items-baseline pt-4">
+                            <div class="col d-flex px-2">
+                                <input class="form-control form-control-sm" placeholder="comment" type="text"
+                                    formControlName="commentContent">
+                            </div>
+                            <span class="px-2"><button type="submit" class="btn btn-dark btn-sm"
+                                    [disabled]="isBusy">REPLY</button></span>
+                            <span *ngIf="isBusy" class="ms-1 spinner-border spinner-border-sm" role="status"></span> 
+                        </span>
+                        <!-- <pre>{{ newComment.value | json }}</pre>    -->
+                        <!-- </div>
+</div> -->
+                    </form>
+                    <span *ngIf="!showDropLink"  class="d-flex justify-content-center p-3">
+                        <span ><button [routerLink]="['/login']" class="btn btn-dark btn-sm">LOG IN TO REPLY</button></span>
+                    </span>
+                </div>
+                <!-- <div class="p-2">
+                <div class="card-body d-flex justify-content-around align-items-center">
+                    <a href="#" class="card-link text"
+                        [routerLink]="['/listdetails', listid, sublist.subListCreator]">ALL
+                        ITEMS
+                        ({{listcount[i]}})
+                    </a>
+                    <span *ngIf="sublist.subListCreator !== username">
+                        <a href="" *ngIf="showDropLink" [routerLink]="['/drop', listid]" class="btn btn-dark">drop your
+                            list</a>
+                        <a href="" *ngIf="!showDropLink" [routerLink]="['/login']" class="btn btn-dark">drop your
+                            list</a>
+                    </span>
+                    <a href="" *ngIf="sublist.subListCreator == username" [routerLink]="['/edit', listid]"
+                        class="btn btn-dark">edit your list</a>
+                </div>
+            </div> -->
+            </div>
+        </div>
+
+        <div class="fixed-bottom"><span class="p-2 pb-3 d-flex justify-content-start">
+            <button class="btn-dark btn m-4 d-xl-none" (click)="goBack()"><i class=" bi-arrow-left"
+                    style="font-size: 16px; color: white;"></i></button>
+        </span>
+    </div>
+        <br>
